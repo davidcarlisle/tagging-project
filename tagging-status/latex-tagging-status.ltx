@@ -13,15 +13,15 @@ layout: null
 {%- for p in t-s -%}
 
   \@kernel@tagging@status{ {{p.name}} }{
-    {%-  if p.type == "package" -%}sty{%- endif -}
-    {%-  if p.type == "class" -%}cls{%- endif -}
-    {%-  if p.type == "library" -%}ltx{%- endif -}
+    {%-  if p.type == "package" -%}sty{%- endif -%}
+    {%-  if p.type == "class" -%}cls{%- endif -%}
+    {%-  if p.type == "library" -%}ltx{%- endif -%}
 }{
-    {%-  if p.status == "compatible" -%}4{%- endif -}
-    {%-  if p.status == "partially-compatible" -%}3{%- endif -}
-    {%-  if p.status == "urrently-compatible" -%}2{%- endif -}
-    {%-  if p.status == "no-support" -%}1{%- endif -}
-    {%-  if p.status == "unknown" -%}0{%- endif -}
+    {%-  if p.status == "compatible" -%}4{%- endif -%}
+    {%-  if p.status == "partially-compatible" -%}3{%- endif -%}
+    {%-  if p.status == "urrently-compatible" -%}2{%- endif -%}
+    {%-  if p.status == "no-support" -%}1{%- endif -%}
+    {%-  if p.status == "unknown" -%}0{%- endif -%}
 }
 
 {% endfor %}
