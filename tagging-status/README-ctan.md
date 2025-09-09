@@ -1,4 +1,5 @@
 ---
+layout: null
 ---
 
 # LaTeX Tagging Status
@@ -10,8 +11,9 @@ https://latex3.github.io/tagging-project/tagging-status/full
 
 The TeX commands and their arguments are internal to code in latex-lab
 and are likely to change.
+
 So it is not possible to use them directly.
-Instead latex-lab will provide higher level interfaces to the data!
+Instead latex-lab will provide higher level interfaces to the data.
 
 LaTeX Project  
 Licence LPPL
