@@ -12,7 +12,7 @@ layout: null
 
 {%- for p in t-s -%}
 \@kernel@tagging@status{
-    {%- -%}{{p.name}} {$- -%}
+    {%- -%}{{p.name}} {%- -%}
 }{
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
