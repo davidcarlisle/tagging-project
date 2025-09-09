@@ -1,20 +1,29 @@
 ---
 layout: null
 ---
+\ProvidesFile{latex-tagging-status.ltx}[{{ site.time | date: "%Y-%m-%d }}]
 
 %% LaTeX Tagging Status
 
+%% The data below is an internal representation of the tagging status from
+%% https://latex3.github.io/tagging-project/tagging-status/full
+%% The TeX commands and their arguments are internal to code in latex-lab
+%% and are likely to change.
+%% So it is **not** possible to use them directly.
+%% Instead latex-lab will provide higher level interfaces to the data!
 
-% Generated: {{ site.time }}
+% LaTeX Project
+% Licence LPPL
+
 
 \def\@kernel@tagging@status#1#2#3{\expandafter\chardef\csname t@status@#1.#2\endcsname#3\relax}
 
-{% assign t-s = site.data.tagging-status %}
-{% assign lb = "{" %}
-{% assign rb = "}" %}
+{%- assign t-s = site.data.tagging-status -%}
+{%- assign lb = "{" -%}
+{%- assign rb = "}" -%}
 
 {%- for p in t-s -%}
-  \@kernel@tagging@status{{lb}}{{p.name}}{{rb}}{{$lb}}
+\@kernel@tagging@status{{lb}}{{p.name}}{{rb}}{{$lb}}
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
     {%-  if p.type == "library" -%}ltx{%- endif -%}
@@ -26,5 +35,3 @@ layout: null
     {%-  if p.status == "unknown" -%}0{%- endif -%}
 }
 {% endfor %}
-
-        
