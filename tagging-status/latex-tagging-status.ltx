@@ -11,9 +11,7 @@ layout: null
 {% assign t-s = site.data.tagging-status %}
 
 {%- for p in t-s -%}
-\@kernel@tagging@status{
-    {%- -%}{{p.name}} {%- -%}
-}{
+\@kernel@tagging@status{{{p.name}}}{
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
     {%-  if p.type == "library" -%}ltx{%- endif -%}
