@@ -1,0 +1,29 @@
+---
+layout: null
+---
+
+%% LaTex tagging Status
+#  Time
+% Generated: {{ site.time | date_to_rfc822 }}_
+
+\def\@kernel@tagging@status#1#2#3{\expandafter\chardef\csname t@status@#1.#2\endcsname#3\relax}
+
+{% assign t-s = site.data.tagging-status %}
+
+{%- for p in t-s -%}
+
+  \@kernel@tagging@status{ {{p.name}} }{
+    {%-  if p.type == "package" -%}sty{%- endif -}
+    {%-  if p.type == "class" -%}cls{%- endif -}
+    {%-  if p.type == "library" -%}ltx{%- endif -}
+}{
+    {%-  if p.status == "compatible" -%}4{%- endif -}
+    {%-  if p.status == "partially-compatible" -%}3{%- endif -}
+    {%-  if p.status == "urrently-compatible" -%}2{%- endif -}
+    {%-  if p.status == "no-support" -%}1{%- endif -}
+    {%-  if p.status == "unknown" -%}0{%- endif -}
+}
+
+{% endfor %}
+
+        
