@@ -2,8 +2,9 @@
 layout: null
 ---
 
-%% LaTex tagging Status
-#  Time
+%% LaTeX Tagging Status
+
+
 % Generated: {{ site.time }}
 
 \def\@kernel@tagging@status#1#2#3{\expandafter\chardef\csname t@status@#1.#2\endcsname#3\relax}
@@ -11,7 +12,13 @@ layout: null
 {% assign t-s = site.data.tagging-status %}
 
 {%- for p in t-s -%}
-\@kernel@tagging@status{{{p.name}}}{
+  {%- raw -%}
+    \@kernel@tagging@status{
+  {%- endraw -%}
+    {{p.name}}
+  {%- raw -%}
+  }{
+  {%- endraw -%}
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
     {%-  if p.type == "library" -%}ltx{%- endif -%}
