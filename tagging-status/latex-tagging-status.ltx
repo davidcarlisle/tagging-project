@@ -15,14 +15,13 @@ layout: null
 % LaTeX Project
 % Licence LPPL
 
-
 \def\@kernel@tagging@status#1#2#3{\expandafter\chardef\csname t@status@#1.#2\endcsname#3\relax}
 
 {%- assign t-s = site.data.tagging-status -%}
 {%- assign lb = "{" -%}
 {%- assign rb = "}" -%}
 
-{%- for p in t-s -%}
+{% for p in t-s %}
 \@kernel@tagging@status{{lb}}{{p.name}}{{rb}}{{$lb}}
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
