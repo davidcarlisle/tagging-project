@@ -12,13 +12,13 @@ layout: null
 {% assign t-s = site.data.tagging-status %}
 
 {%- for p in t-s -%}
-  {%- raw -%}
-    \@kernel@tagging@status{
-  {%- endraw -%}
+{%- raw -%}
+  \@kernel@tagging@status{
+{%- endraw -%}
     {{p.name}}
-  {%- raw -%}
+{%- raw -%}
   }{
-  {%- endraw -%}
+{%- endraw -%}
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
     {%-  if p.type == "library" -%}ltx{%- endif -%}
