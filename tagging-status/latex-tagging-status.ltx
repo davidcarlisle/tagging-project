@@ -22,7 +22,7 @@ layout: null
 {%- assign rb = "}" -%}
 
 {%- for p in t-s -%}
-\@kernel@tagging@status{{lb}}{{p.name}}{{rb}}{{$lb}}
+\@kernel@tagging@status{{lb}}{{p.name}}{{rb}}{{lb}}
     {%-  if p.type == "package" -%}sty{%- endif -%}
     {%-  if p.type == "class" -%}cls{%- endif -%}
     {%-  if p.type == "library" -%}ltx{%- endif -%}
