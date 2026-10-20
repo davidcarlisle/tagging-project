@@ -19,7 +19,7 @@ function generatepreamble(t,e) {return e.getValue();}
 	  "metadata":         ""
       }
 
-runlatex.editorlines=45;
+runlatex.editorlines=20;
 
 </script>
 
@@ -27,13 +27,13 @@ runlatex.editorlines=45;
 
 <div style="float:right; width: 8em; padding:1em;border:solid thin black; background-color:#EFEFEF" markdown=1>
 
-  [Generic headings](#generic-heading-template-implementation)
+  [Generic headings](#1-generic-heading-template-implementation)
 
-  [Packages](#package-reimplementationsadjustments)
+  [Packages](#2-package-reimplementationsadjustments)
 
-  [KOMA](#koma-script-classes)
+  [KOMA](#3-koma-script-classes)
 
-  [Memoir](#memoir)
+  [Memoir](#4-memoir-class)
 
 </div>
 
@@ -59,9 +59,11 @@ generated PDF at [ngPDF](https://ngpdf.com). ngPDF is provided free of
 charge by its authors, although is not open source, it is not a
 necessary component of the validation services shown on this page.
 
-The [tagging status page](https://latex3.github.io/tagging-project/tagging-status) lists many test files showing the
-tagging status of over a thousand LaTeX packages. A small sample are
-highlighted here, corresponding to current work items.
+The [tagging status
+page](https://latex3.github.io/tagging-project/tagging-status) lists
+many test files showing the tagging status of over a thousand LaTeX
+packages. A small sample are highlighted here, corresponding to
+current work items.
 
 The examples are presented in an online editor to allow you to
 experiment and change the examples. The resulting TeX files are _not_
@@ -82,17 +84,18 @@ is funded through [NGI0 Commons Fund](https://nlnet.nl/commonsfund), a fund esta
 </div>
 
 
-## Generic Heading Template Implementation
+## 1. Generic Heading Template Implementation
 
-The standard `article` class will already use the heading templates as shown in the example below.
-This is included here to demonstrate this test infrastructure, before the emulation of the
-heading packages has been undertaken.
+The standard `article` class will already use the heading templates as
+shown in the example below.  This is included here to demonstrate this
+test infrastructure, before the emulation of the heading packages has
+been undertaken.
 
 ```latex
 {% include_relative article-01.tex %}
 ```
 
-### Implement generic order key handling
+### 1a. Implement generic order key handling
 
 In layouts for headings, captions, etc. the placement of individual
 data items (such as fixed strings like "Chapter", a generated number,
@@ -110,10 +113,6 @@ You may find the documentation in [latex-lab on
 CTAN](https://ctan.org/tex-archive/macros/latex-dev/required/latex-lab)
 or on your LaTeX installation with `texdoc latex-lab-template`.
 
-> At the moment only the .dtx file was added to the last dev release
-> but not the .pdf documentation. That will happen with the next
-> update.
-
 The test file below defines a small template (that is not doing much)
 but lets you experiment with the mechanism and its results.
 
@@ -122,14 +121,53 @@ but lets you experiment with the mechanism and its results.
 {% include_relative order-key-01.tex %}
 ```
 
+The new mechanism has also been applied in the templates used to
+declare theorem-like environments.  In the next example various
+changes are made to the plain instance of type theoremstyle to exhibit
+some of the features:
+
+```latex
+{% include_relative order-key-theorem.tex %}
+```
+
+We have also replaced the initial templates for heading commands to
+make full use of the order key functionality. This is explored in the
+next example:
+
+
+```latex
+{% include_relative order-key-headings.tex %}
+```
+
+
+### 1e. Extend key binding setup
+
+In some templates the variable names in the key binds need to contain
+characters normally not directly usable, e.g., a number or a
+hyphen. To support this the template declaration syntax was extended
+with the keyword `name` so that one can write
+```
+ separator-a = name {l__trial_separator-a_tl}
+```
+which generates `\__trial_separator-a_tl` a macro name that can't be
+written directly because of the hyphen, which is normally not allowed
+in macro names (the same would be the case if you need a digit as part of
+the name). This is, for example, needed in the order processing
+implementation where such variables are constructed from key names
+that may contain such characters.
+
+As an example testing the implementation for the new keyword look at
+the test in section [1a](#1a-implement-generic-order-key-handling)
+which makes use of the functionality in 3 places.
 
 
 
-## Package Reimplementations/adjustments
 
 
+## 2. Package Reimplementations/adjustments
 
-### titlesec
+
+### 2a-2e. titlesec
 
 The [titlesec](https://ctan.org/pkg/titlesec) package is currently
 incompatible with the LaTeX tagging code, and this example
@@ -147,16 +185,62 @@ interface producing accessible PDF outputs.
 
 
 
-### fncychap
+### 2f. The `fncychap` package
 
-### quotechap
+The [fncychap](https://ctan.org/pkg/fncychap) package implements a
+number of chapter layouts and offers customization possibilities to
+adjusts these layouts.  Originally written about 20 years ago, its
+implementation directly alters several LaTeX's internals to provide the
+customization possibilities and as a result its code is incompatible
+with LaTeX's new heading code that enables tagging.
+
+We have now provided adjustments to the package code that are
+automatically loaded when the package is used in a document. With
+these adjustements all chapter layouts offered by the package become
+tagging-aware and the package can thus be used when producing
+accessible documents.
+
+The following example document loads the package and then shows the
+the results of all chapter layouts one after another (the somewhat
+lengthy code at the top of the example is only there to allow more
+than one chapter layout to be used in a single document. A normal
+usage of the package would just have a line like
+`\usepackage[Lenny][fncychap]` in the preamble).
+
+```latex
+{% include_relative fncychap-01.tex %}
+```
+
+In this second example a customized design is exhibited showing that
+freeform customizations as offered by the package work as well and
+result in tagged and accessible chapter headings.
+
+```latex
+{% include_relative fncychap-02.tex %}
+```
 
 
-### tocloft
+
+### 2g. The `quotechap`package
 
 
-## KOMA-Script Classes
+
+### 2h. The `tocloft` package
+
+The [tocloft](https://ctan.org/pkg/tocloft) package was incompatible
+with the LaTeX tagging code and this example demonstrated one of the
+issues with it: the TOC data is incomplete and not correctly tagged.
+This is no longer the case: the package was updated and is now
+compatible with LaTeX's tagging functionality.
 
 
-## memoir      
+```latex
+{% include_relative tocloft-01.tex %}
+```
+
+
+## 3. KOMA-Script Classes
+
+
+## 4. memoir Class     
 
